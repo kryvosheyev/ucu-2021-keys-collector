@@ -1,0 +1,32 @@
+version: "3.4"
+services:
+#  crawler_1:
+#    container_name: crawler
+#    build:
+#      dockerfile: Dockerfile
+#      context: ./crawler
+#    volumes:
+#      - "./crawler/app:/src/app"
+#    ports:
+#      - 3000:3000
+      
+  parser_1:
+    container_name: secondary_1
+    build:
+      dockerfile: Dockerfile
+      context: ./parser
+    volumes:
+      - "./parser/app:/src/app"
+    ports:
+      - 4001
+
+
+  streamer:
+    container_name: streamer
+    build:
+      dockerfile: Dockerfile
+      context: ./streamer
+    volumes:
+      - "./streamer/app:/src/app"
+    ports:
+      - 6000
