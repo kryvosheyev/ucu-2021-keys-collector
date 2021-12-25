@@ -60,6 +60,8 @@ async function  sendPostHTTP(baseUrl, url, body) {
 async function reqToNodeSendMsgWithoutAck(node, url, data, timeout) {
     return new Promise(async (resolve, reject) => {
         try {
+            // console.log("reqToNodeSendMsgWithoutAck sending data=", data);
+            console.log("reqToNodeSendMsgWithoutAck sending keys=", {keys: _.map(_.concat([], data), 'msg')});
             // console.log("url=", url, " ")
             let response = await axios({
                 method: 'post',
@@ -69,7 +71,6 @@ async function reqToNodeSendMsgWithoutAck(node, url, data, timeout) {
                 data: {keys: _.concat([], _.map(data, 'msg'))}
             });
             // REQ_ACK, returned { added:[]} with array of ids like [3,4]
-            console.log("reqToNodeSendMsgWithoutAck sending=", {keys: _.concat([], _.map(data, 'msg'))});
             if (response.data && response.data.added && response.data.added.length) {
                 let added =  _.map(_.uniqBy(_.concat([], data), '_id_curr'), '_id_curr');
                 resolve({node:node, added:added});

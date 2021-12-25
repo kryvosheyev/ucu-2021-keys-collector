@@ -16,10 +16,10 @@ const {RETRY} = require('../config');
 
 router.post('/download-and-parse-file', async (req, res, next) => {
     let body_example = {
-        fileHash: 'xxxxx',
-        fileUrl: 'github.xxxxx',
-        project: 'github.xxxx',
-        language: 'java'
+        "fileHash": "xxxxx",
+        "fileUrl": "github.xxxxx",
+        "project": "github.xxxx",
+        "language": "java"
     };
 
     let body = req.body;

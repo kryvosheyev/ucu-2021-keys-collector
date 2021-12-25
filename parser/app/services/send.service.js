@@ -67,6 +67,9 @@ async function proceedUntilSucceedWhileAvailable(node, rLogMsg, N, res) {
     let msgState = await getMsgState(rLogMsg._id_curr);
     let nodeHealthState = await STATE_SERVICE.getHealthByNodeName(node.name);
     console.log(`${node.name} nodeHealthState=${nodeHealthState}`);
+    if (msgState.W <= msgState.successfulWritesQty) {
+        UTILS.sendResponse(res, 200, RESPONSE_MESSAGES.OK)
+    }
     if (msgState.W <= msgState.successfulWritesQty && nodeHealthState.valueOf() === HEALTH_STATUSES.UNHEALTHY.valueOf()) {
         BATCH_RETRY_SERVICE.addMsgToBatchRetry(rLogMsg, node);
         need_retrying = false;
