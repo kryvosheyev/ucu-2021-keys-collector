@@ -1,5 +1,6 @@
 const axios = require('axios');
 const _ = require("lodash");
+const moment = require('moment-timezone');
 const {STREAMER_API_SEND_COLLECTED_KEYS_URL} = require('../config');
 
 async function sleep(ms) {
@@ -124,6 +125,15 @@ async function getFileAsStr(fileUrl){
     return " key = HGFDYREWRESSFSTER";
 }
 
+
+/**
+ * @return {string}
+ */
+function KievTimeNow() {
+    // moment().tz('Europe/Kiev').format().substring(0, 19);
+    return `${moment().tz('Europe/Kiev').toISOString(true).substring(0, 23)}Z`;
+}
+
 module.exports = {
     sleepWhileUpdateInProgress,
     isEmpty,
@@ -133,5 +143,6 @@ module.exports = {
     sendResponse,
     sleep,
     isFileAlreadyProcessed,
-    getFileAsStr
+    getFileAsStr,
+    KievTimeNow
 }
