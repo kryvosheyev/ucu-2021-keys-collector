@@ -1,19 +1,17 @@
 const config = {
     CURRENT_STATE_PATH: './db/current-state.json',
 
+    DOWNLOAD_DIR: "./downloaded",
+
     // name must be unique
     secondaries: [
-        {name:'s1', url:'http://secondary_1:6000'},
-        {name:'s2', url:'http://secondary_2:6000'}
+        {name:'streamer_one', url:'http://streamer_1:6001'},
+        {name:'streamer_two', url:'http://streamer_2:6002'},
+        {name:'analytics_one', url:'http://analytics_1:7001'}
     ],
 
-    //The time to wait for a secondary node response when sending a message.
-    // If the timeout is reached, the message sending attempt
-    // will be considered a failure.
-    msg_timeout: 3000,
-
-    SECONDARY_API_HEALTH_CHECK_URL: '/health',
-    SECONDARY_API_ADD_MESSAGE_URL: '/secondary/add-messages',
+    STREAMER_API_HEALTH_CHECK_URL: '/health',
+    STREAMER_API_SEND_COLLECTED_KEYS_URL: '/streamer/send-collected-keys',
     HEALTH_CHECK:{
         //"HEALTHY" = send both realtime messages and BATCH_RETRY work
         //"SUSPECTED" = send only realtime messages. Do not send BATCH_RETRY
@@ -40,7 +38,7 @@ const config = {
 
     },
 
-    // first, try to deliver a message infinite number of times, until WriteConcern is satisfied
+    // first, try to deliver a message infinite number of times, if node is healthy
     RETRY: {
         default_write_concern: 1,
 
@@ -57,7 +55,7 @@ const config = {
         timeout: 3000,
     },
 
-    // if WriteConcern is satisfied but the message still has not been delivered to the node(s), then this message goes to BATCH_RETRY
+    // if node is unhealthy, then this message goes to BATCH_RETRY
     // In BATCH_RETRY, each node will have separate process, which will send messages in batches to that node
     BATCH_RETRY:{
         //  exponentialBackOff = on send failure, move right on INTERVALS[] and MESSAGES_QTY[]
@@ -80,8 +78,6 @@ const config = {
         //The time to wait for a secondary node response when sending a retry message.
         // If the timeout is reached, the message sending attempt
         // will be considered a failure.
-        // You can set this value to be more than msg_timeout, because, for example,
-        // processing BATCH_RETRY 100 messages can take more time than processing NORMAL SEND 1 message
         timeout: 3000,
 
         // for each secondary, we will check retry buffer.
@@ -92,7 +88,6 @@ const config = {
         // then next next retry attempt will be after this interval
         sleep_interval_if_not_available: 5000
     },
-    isQuorumRequired: true,
 
 };
 

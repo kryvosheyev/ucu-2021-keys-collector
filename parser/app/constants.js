@@ -10,7 +10,5 @@ module.exports.HEALTH_STATUSES = {
 };
 
 module.exports.RESPONSE_MESSAGES = {
-    NO_QUORUM: {msg: "No Quorum"},
     OK: {msg: "OK"},
-    WRITE_CONCERN_NOT_ACHIEVED: {msg: "writeConcern is not achieved"},
 };

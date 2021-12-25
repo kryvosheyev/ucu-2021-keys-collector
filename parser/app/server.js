@@ -4,7 +4,7 @@ var http = require('http');
 var argv = require('optimist').argv;
 const config = require('./config');
 
-console.log("master will try to contact secondaries via these urls: ", config.secondaries);
+console.log("parser will try to send detected key to the streamer on this url: ", config.STREAMER_API_URL);
 /**
  * Get port from environment and store in Express.
  */

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const debug = require('debug')('ucu-ds-log:server');
+const debug = require('debug')('ucu-keys-collector-parser:server');
 const http = require('http');
 /**
  * Module dependencies.
@@ -30,7 +30,7 @@ server.on('listening', onListening);
 
 // close all opened DB connections
 process.on('SIGINT', async () => {
-  console.log("All pools closed")
+  console.log("... parser caught STOP signal, shutting down")
   process.exit(0);
 })
 

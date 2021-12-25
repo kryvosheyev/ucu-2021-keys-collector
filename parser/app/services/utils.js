@@ -1,6 +1,6 @@
 const axios = require('axios');
 const _ = require("lodash");
-const {SECONDARY_API_ADD_MESSAGE_URL} = require('../config');
+const {STREAMER_API_SEND_COLLECTED_KEYS_URL} = require('../config');
 
 async function sleep(ms) {
     return new Promise(resolve =>
@@ -57,13 +57,39 @@ async function  sendPostHTTP(baseUrl, url, body) {
     })
 };
 
+async function reqToNodeSendMsgWithoutAck(node, url, data, timeout) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // console.log("url=", url, " ")
+            let response = await axios({
+                method: 'post',
+                url: STREAMER_API_SEND_COLLECTED_KEYS_URL,
+                baseURL: url,
+                timeout: timeout,
+                data: {keys: _.concat([], _.map(data, 'msg'))}
+            });
+            // REQ_ACK, returned { added:[]} with array of ids like [3,4]
+            console.log("reqToNodeSendMsgWithoutAck sending=", {keys: _.concat([], _.map(data, 'msg'))});
+            if (response.data && response.data.added && response.data.added.length) {
+                let added =  _.map(_.uniqBy(_.concat([], data), '_id_curr'), '_id_curr');
+                resolve({node:node, added:added});
+            } else {
+                resolve({node:node, added:[]});
+            }
+        } catch (err) {
+            // console.log(`reqToNodeSendMsg failed to send msg to node=${node.name}`);
+            resolve({node:node, added:[]})
+        }
+    })
+}
+
 async function reqToNodeSendMsg(node, url, data, timeout) {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log("url=", url, " ")
             let response = await axios({
                 method: 'post',
-                url: SECONDARY_API_ADD_MESSAGE_URL,
+                url: STREAMER_API_SEND_COLLECTED_KEYS_URL,
                 baseURL: url,
                 timeout: timeout,
                 data: {data: _.concat([], data)}
@@ -82,11 +108,29 @@ async function reqToNodeSendMsg(node, url, data, timeout) {
     })
 }
 
+async function isFileAlreadyProcessed(fileHash){
+    // TODO implement
+    return false;
+}
+
+async function getFileAsStr(fileUrl){
+    // TODO implement
+    /*
+       download
+       save to /config.DOWNLOAD_DIR
+       return as str
+     */
+    return " key = HGFDYREWRESSFSTER";
+}
+
 module.exports = {
     sleepWhileUpdateInProgress,
     isEmpty,
     sendPostHTTP,
     reqToNodeSendMsg,
+    reqToNodeSendMsgWithoutAck,
     sendResponse,
-    sleep
+    sleep,
+    isFileAlreadyProcessed,
+    getFileAsStr
 }

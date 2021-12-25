@@ -12,39 +12,29 @@ const PROCESS_SERVICE = require('../services/process.service');
 const {RETRY} = require('../config');
 
 
-router.post('/add-message', async (req, res, next) => {
+
+
+router.post('/download-and-parse-file', async (req, res, next) => {
     let body_example = {
-        msg: {
-            hint: "body must contain msg object, which can have any properties inside. Seee examples below:",
-            property1: "value of any type: string, array, object, etc.",
-            arr: ['item1'],
-            arrOfObjects: [{ "value1": "it's the first item in the array of objects"}]
-        },
-        options: {writeConcern:2}
+        fileHash: 'xxxxx',
+        fileUrl: 'github.xxxxx',
+        project: 'github.xxxx',
+        language: 'java'
     };
 
     let body = req.body;
     console.log("/master/add-message received body=", body);
 
-    let { msg, options } = body;
+    let { fileHash, fileUrl, project, language } = body;
 
     try {
-        if (!msg || UTILS.isEmpty(msg)) {
+        if (!fileHash || !fileUrl || !project || !language) {
             responseBody = { ...body_example };
-            console.log("/master/add-message  missing msg object. Returning Error 400");
+            console.log("/master/add-message missing one of the required properties. Returning Error 400");
             return res.status(400).send(responseBody);
         }
 
-        let writeConcern=RETRY.default_write_concern;
-        if (options && options.writeConcern) {
-            if(options.writeConcern < 1 || options.writeConcern > (config.secondaries.length+1)){
-                console.log("/master/add-message  incorrect writeConcern value");
-                res.status(400).send({msg: 'incorrect writeConcern value'});
-            }
-            writeConcern = options.writeConcern;
-        }
-
-        await PROCESS_SERVICE.processMessage(msg, writeConcern, res);
+        await PROCESS_SERVICE.processMessage(fileHash, fileUrl, project, language, res);
     }
     catch (err) {
         console.log("/master/add-message: Error - ", err);
@@ -53,7 +43,7 @@ router.post('/add-message', async (req, res, next) => {
 
 });
 
-router.get('/get-all-messages', async (req, res, next) => {
+router.get('/get-all-detected-keys', async (req, res, next) => {
     try {
         let data = await STORAGE_SERVICE.getAllMsg();
         console.log("/master/get-all-messages returning ", data);

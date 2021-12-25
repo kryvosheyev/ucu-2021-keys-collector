@@ -22,7 +22,7 @@ BATCH_RETRY_SERVICE.startRetryMonitors().then(
 
 
 var indexRouter = require('./routes/index');
-var masterRouter = require('./routes/master');
+var parserRouter = require('./routes/parser');
 
 var app = express();
 
@@ -51,7 +51,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/master', masterRouter);
+app.use('/parser', parserRouter);
 
 
 // catch 404 and forward to error handler

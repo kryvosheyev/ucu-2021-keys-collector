@@ -14,9 +14,9 @@ async function saveMsgAndGetRLogMsg(msg){
             _id_curr: _id_curr,
             msg: msg
         };
-        if (!STORAGE.length) {
-            rLogMsg._id_is_first = true
-        }
+        // if (!STORAGE.length) {
+        //     rLogMsg._id_is_first = true
+        // }
         STORAGE.push(rLogMsg);
         console.log("saveMsgAndGetRLogMsg rLogMsg=", rLogMsg);
         return rLogMsg;
