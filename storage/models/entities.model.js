@@ -118,6 +118,31 @@ EntitiesSchema.statics.findAllByKeysAndValuesQuery = async (keys, values) => {
   })
 }
 
+EntitiesSchema.statics.deleteAllByKeysAndValuesQuery = async (keys, values) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let query = {};
+      keys = sortByKeys(keys);
+      for (let key in keys) {
+        // console.log('key:', key);
+        // console.log('value:', keys[key]);
+        query[`keys.${key}`] = keys[key];
+      }
+      if (UTILS.isObject(values)) {
+        values = sortByKeys(values);
+        for (let value in values) {
+          query[`value.${value}`] = values[value];
+        }
+      }
+      let deleteRes = await Entities.deleteMany(query).exec();
+      // console.log("deleteAllByKeysAndValuesQuery deleteRes - ", deleteRes);
+      resolve(deleteRes);
+    } catch (err) {
+      reject(err);
+    }
+  })
+}
+
 const sortByKeys = (object) => {
   const keys = Object.keys(object)
   const sortedKeys = _.sortBy(keys)

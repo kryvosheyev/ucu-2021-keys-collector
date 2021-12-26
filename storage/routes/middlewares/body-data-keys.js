@@ -7,9 +7,10 @@ module.exports = (req, res, next) => {
     body.data = {};
   }
   if (body.data && !body.data.keys) {
-    body.data.keys = {
-      env: config.ENV
-    }
+    body.data.keys = {};
+    // body.data.keys = {
+    //   env: config.ENV
+    // }
   }
   // if (body.data && body.data.keys && !body.data.keys.env) {
   //   body.data.keys.env = config.ENV;

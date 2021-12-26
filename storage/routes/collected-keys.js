@@ -3,6 +3,7 @@ const router = express.Router();
 
 const UTILS = require("../services/utils");
 const STORAGE_SERVICE = require("../services/storage.service");
+const COLLECTED_KEYS_SERVICE = require("../services/collected-keys.service");
 const { HTTP_CODE } = require("../constants");
 
 router.post('/reset-database', async (req, res, next) => {

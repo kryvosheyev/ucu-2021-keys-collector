@@ -1,7 +1,7 @@
 const axios = require('axios');
 const _ = require("lodash");
 const moment = require('moment-timezone');
-const {STREAMER_API_SEND_COLLECTED_KEYS_URL} = require('../config');
+const {SECONDARY_API_SEND_COLLECTED_KEYS_URL} = require('../config');
 
 async function sleep(ms) {
     return new Promise(resolve =>
@@ -66,7 +66,7 @@ async function reqToNodeSendMsgWithoutAck(node, url, data, timeout) {
             // console.log("url=", url, " ")
             let response = await axios({
                 method: 'post',
-                url: STREAMER_API_SEND_COLLECTED_KEYS_URL,
+                url: SECONDARY_API_SEND_COLLECTED_KEYS_URL,
                 baseURL: url,
                 timeout: timeout,
                 data: {keys: _.concat([], _.map(data, 'msg'))}
@@ -91,7 +91,7 @@ async function reqToNodeSendMsg(node, url, data, timeout) {
             // console.log("url=", url, " ")
             let response = await axios({
                 method: 'post',
-                url: STREAMER_API_SEND_COLLECTED_KEYS_URL,
+                url: SECONDARY_API_SEND_COLLECTED_KEYS_URL,
                 baseURL: url,
                 timeout: timeout,
                 data: {data: _.concat([], data)}

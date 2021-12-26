@@ -1,3 +1,7 @@
+const DB_TABLES = {
+  PROCESSED_FILES: "tbl_processed_files",
+  COLLECTED_KEYS: "tbl_collected_keys",
+};
 
 const HTTP_CODE = {
   CONTINUE: 100,

@@ -3,15 +3,17 @@ const config = {
 
     DOWNLOAD_DIR: "./downloaded",
 
+    PROCESSED_FILES_CHECK_URL: "http://storage_1:5001/",
+
     // name must be unique
     secondaries: [
+        {name:'storage_one', url:'http://storage_1:5001'},
         {name:'streamer_one', url:'http://streamer_1:6001'},
         {name:'streamer_two', url:'http://streamer_2:6002'},
-        {name:'analytics_one', url:'http://analytics_1:7001'}
     ],
 
-    STREAMER_API_HEALTH_CHECK_URL: '/health',
-    STREAMER_API_SEND_COLLECTED_KEYS_URL: '/streamer/send-collected-keys',
+    SECONDARY_API_HEALTH_CHECK_URL: '/health',
+    SECONDARY_API_SEND_COLLECTED_KEYS_URL: '/add-collected-keys',
     HEALTH_CHECK:{
         //"HEALTHY" = send both realtime messages and BATCH_RETRY work
         //"SUSPECTED" = send only realtime messages. Do not send BATCH_RETRY

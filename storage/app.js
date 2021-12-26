@@ -5,8 +5,10 @@ const cors = require('cors');
 
 require('./db/mongo')();
 
-// var routes = require('./routes/index');
+const indexRoute = require('./routes/index');
 const storageRoute = require('./routes/storage');
+const processedFilesRoute = require('./routes/processed-files');
+const collectedKeysRoute = require('./routes/collected-keys');
 
 const bodyDataKeysMiddleware = require('./routes/middlewares/body-data-keys');
 
@@ -24,8 +26,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyDataKeysMiddleware);
 
-// app.use('/', routes);
+app.use('/', indexRoute);
 app.use('/storage', storageRoute);
+app.use('/processed-files', processedFilesRoute);
+app.use('/collected-keys', collectedKeysRoute);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

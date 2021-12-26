@@ -3,7 +3,7 @@ const _ = require("lodash");
 const axios = require('axios');
 const config = require('../config');
 const {HEALTH_CHECK} = require('../config');
-const {STREAMER_API_HEALTH_CHECK_URL} = require('../config');
+const {SECONDARY_API_HEALTH_CHECK_URL} = require('../config');
 const STATE_SERVICE = require('../services/state.service');
 const SEND_SERVICE = require('../services/send.service');
 const UTILS = require('../services/utils');
@@ -101,7 +101,7 @@ async function healthCheck(nodeName, nodeUrl) {
         try{
             let response = await axios({
                 method: 'get',
-                url: STREAMER_API_HEALTH_CHECK_URL,
+                url: SECONDARY_API_HEALTH_CHECK_URL,
                 baseURL: url,
                 timeout: timeout,
                 data: {}
