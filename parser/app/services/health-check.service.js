@@ -3,7 +3,6 @@ const _ = require("lodash");
 const axios = require('axios');
 const config = require('../config');
 const {HEALTH_CHECK} = require('../config');
-const {SECONDARY_API_HEALTH_CHECK_URL} = require('../config');
 const STATE_SERVICE = require('../services/state.service');
 const SEND_SERVICE = require('../services/send.service');
 const UTILS = require('../services/utils');
@@ -19,7 +18,8 @@ async function startHealthCheckMonitors() {
     for(let i=0;i<nodes.length;i++){
         let node = {
             name: nodes[i].name,
-            url: nodes[i].url,
+            baseUrl: nodes[i].baseUrl,
+            healthCheckUrl: nodes[i].healthCheckUrl,
             _stateIndex: HEALTH_CHECK.start_health_index,
             state: HEALTH_CHECK.HEALTH_SCHEME[HEALTH_CHECK.start_health_index]
         };
@@ -27,7 +27,7 @@ async function startHealthCheckMonitors() {
     }
     for(let i=0;i<nodes.length;i++){
         // start async process
-        healthCheck(nodes[i].name, nodes[i].url );
+        healthCheck(nodes[i].name, nodes[i].baseUrl, nodes[i].healthCheckUrl );
     }
 }
 
@@ -83,9 +83,9 @@ async function setHealthState(nodeName, healthResponse){
     }
 }
 
-async function healthCheck(nodeName, nodeUrl) {
+async function healthCheck(nodeName, nodeUrl, healthCheckUrl) {
     while (true) {
-        let result = await reqToNode(nodeUrl, HEALTH_CHECK.timeout);
+        let result = await reqToNode(nodeUrl, healthCheckUrl, HEALTH_CHECK.timeout);
         await setHealthState(nodeName, result.HEALTH_STATUS);
         let state = await getHealthState(nodeName);
         if(state.valueOf() === HEALTH_STATUSES.UNHEALTHY.valueOf()){
@@ -97,12 +97,12 @@ async function healthCheck(nodeName, nodeUrl) {
         await UTILS.sleep(intervalAfterReq);
     }
 
-    async function reqToNode(url, timeout) {
+    async function reqToNode(baseUrl, healthCheckUrl, timeout) {
         try{
             let response = await axios({
                 method: 'get',
-                url: SECONDARY_API_HEALTH_CHECK_URL,
-                baseURL: url,
+                url: healthCheckUrl,
+                baseURL: baseUrl,
                 timeout: timeout,
                 data: {}
             });

@@ -58,7 +58,7 @@ async function  sendPostHTTP(baseUrl, url, body) {
     })
 };
 
-async function reqToNodeSendMsgWithoutAck(node, url, data, timeout) {
+async function reqToNodeSendMsgWithoutAck(node, baseUrl, sendCollectedKeysUrl, data, timeout) {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log("reqToNodeSendMsgWithoutAck sending data=", data);
@@ -66,8 +66,8 @@ async function reqToNodeSendMsgWithoutAck(node, url, data, timeout) {
             // console.log("url=", url, " ")
             let response = await axios({
                 method: 'post',
-                url: SECONDARY_API_SEND_COLLECTED_KEYS_URL,
-                baseURL: url,
+                url: sendCollectedKeysUrl,
+                baseURL: baseUrl,
                 timeout: timeout,
                 data: {keys: _.concat([], _.map(data, 'msg'))}
             });
@@ -85,14 +85,14 @@ async function reqToNodeSendMsgWithoutAck(node, url, data, timeout) {
     })
 }
 
-async function reqToNodeSendMsg(node, url, data, timeout) {
+async function reqToNodeSendMsg(node, baseUrl, sendCollectedKeysUrl, data, timeout) {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log("url=", url, " ")
             let response = await axios({
                 method: 'post',
-                url: SECONDARY_API_SEND_COLLECTED_KEYS_URL,
-                baseURL: url,
+                url: sendCollectedKeysUrl,
+                baseURL: baseUrl,
                 timeout: timeout,
                 data: {data: _.concat([], data)}
             });

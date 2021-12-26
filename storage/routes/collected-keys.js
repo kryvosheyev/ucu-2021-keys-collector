@@ -6,46 +6,20 @@ const STORAGE_SERVICE = require("../services/storage.service");
 const COLLECTED_KEYS_SERVICE = require("../services/collected-keys.service");
 const { HTTP_CODE } = require("../constants");
 
-router.post('/reset-database', async (req, res, next) => {
-  try {
-    console.log("/storage/reset-database #BODY: ", req.body);
-    const { data } = req.body;
-    const response = await STORAGE_SERVICE.resetDatabase(data.keys);
-    res.send(response).status(HTTP_CODE.OK);
-  } catch (err) {
-    console.log("/storage/reset-database #ERROR: ", err);
-    next(err)
-  }
-});
 
-router.post('/record/delete-all', async (req, res, next) => {
-  try {
-    console.log("/record/delete-all #BODY: ", req.body);
-    const { data } = req.body;
-    let { keys, value } = data;
-    const response = await STORAGE_SERVICE.deleteAllRecords(keys, value);
-    res.send(response).status(HTTP_CODE.OK);
-  } catch (err) {
-    console.log("/record/delete-all #ERROR: ", err);
-    next(err)
-  }
-});
-
-router.post('/record/upsert-and-respond-if-existed-before', async (req, res, next) => {
+router.post('/create', async (req, res, next) => {
   try {
     let { data } = req.body;
     let { keys, value } = data;
-    const found = await STORAGE_SERVICE.getRecord(keys);
     await STORAGE_SERVICE.createRecord(keys, value);
     const current = await STORAGE_SERVICE.getRecord(keys);
     const resp = {
       keys: current.keys,
-      value: current.value,
-      existed: !!(found)
+      value: current.value
     }
     res.send(resp).status(HTTP_CODE.OK);
   } catch (err) {
-    console.log(`/record/create #ERROR: `, err);
+    console.log(`/collected-keys/create #ERROR: `, err);
     next(err);
   }
 });

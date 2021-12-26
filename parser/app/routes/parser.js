@@ -23,14 +23,14 @@ router.post('/download-and-parse-file', async (req, res, next) => {
     };
 
     let body = req.body;
-    console.log("/master/add-message received body=", body);
+    console.log("/parser/download-and-parse-file received body=", body);
 
     let { fileHash, fileUrl, project, language } = body;
 
     try {
         if (!fileHash || !fileUrl || !project || !language) {
             responseBody = { ...body_example };
-            console.log("/master/add-message missing one of the required properties. Returning Error 400");
+            console.log("/parser/download-and-parse-file missing one of the required properties. Returning Error 400");
             return res.status(400).send(responseBody);
         }
         const isFileAlreadyProcessed = await UTILS.isFileAlreadyProcessed(fileHash);
@@ -41,15 +41,15 @@ router.post('/download-and-parse-file', async (req, res, next) => {
         }
     }
     catch (err) {
-        console.log("/master/add-message: Error - ", err);
+        console.log("/parser/download-and-parse-file: Error - ", err);
         next(err);
     }
 });
 
-router.get('/get-all-detected-keys', async (req, res, next) => {
+router.get('/get-all-collected-keys', async (req, res, next) => {
     try {
         let data = await STORAGE_SERVICE.getAllMsg();
-        console.log("/master/get-all-messages returning ", data);
+        console.log("/parser/get-all-detected-keys returning ", data);
         let responseBody = {data:data};
         return res.status(200).send(responseBody);
     }

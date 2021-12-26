@@ -61,7 +61,7 @@ async function secondaryHealthHasChanged(nodes) {
         }
         state.hasQuorum = ((state.availableSecondaries.length+1) > Math.floor(nodes.length/2));
         if(state.hasQuorum !== STATE.hasQuorum){
-            console.log(`hasQuorum was ${!state.hasQuorum}, now ${state.hasQuorum}`);
+            //console.log(`hasQuorum was ${!state.hasQuorum}, now ${state.hasQuorum}`);
         }
         STATE = {...state};
     } finally {

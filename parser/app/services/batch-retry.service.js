@@ -54,7 +54,8 @@ async function retryMonitor(node) {
         let messages = await getNMessagesFromBatchRetry(nodeName, retry_params.messages_qty);
         messageIds = _.map(_.uniqBy(messages, '_id_curr'), '_id_curr');
         console.log(`BATCH RETRY is sending to nodeName(${nodeName}) messages with ids[${messageIds}]`);
-        let response = await UTILS.reqToNodeSendMsgWithoutAck(node, node.url, messages, config.BATCH_RETRY.timeout);
+        let response = await UTILS.reqToNodeSendMsgWithoutAck(node,
+            node.baseUrl, node.sendCollectedKeysUrl, messages, config.BATCH_RETRY.timeout);
         if(response.added && response.added.length) {
             console.log(`BATCH RETRY successfully delivered ${response.added.length} msg to node=${node.name}`);
             await BATCH_RETRY_PARAMS_SERVICE.setRetryState(nodeName, 'OK');

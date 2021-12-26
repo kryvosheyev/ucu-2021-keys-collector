@@ -83,7 +83,8 @@ async function proceedUntilSucceedWhileAvailable(node, rLogMsg, N, res) {
         }
 
         console.log(`proceedUntilSucceedWhileAvailable will try to deliver msg.id[${rLogMsg._id_curr}] to ${node.name}`);
-        let response = await UTILS.reqToNodeSendMsgWithoutAck(node, node.url, rLogMsg, RETRY.timeout);
+        let response = await UTILS.reqToNodeSendMsgWithoutAck(node,
+            node.baseUrl, node.sendCollectedKeysUrl, rLogMsg, RETRY.timeout);
         if (response.added && response.added.length === 1 && response.added[0] === rLogMsg._id_curr) {
             let msgState = await incMsgSuccessfulWritesQty(rLogMsg._id_curr);
             if (msgState.W <= msgState.successfulWritesQty) {

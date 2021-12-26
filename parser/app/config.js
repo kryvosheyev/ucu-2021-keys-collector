@@ -7,12 +7,23 @@ const config = {
 
     // name must be unique
     secondaries: [
-        {name:'storage_one', url:'http://storage_1:5001'},
-        {name:'streamer_one', url:'http://streamer_1:6001'},
-        {name:'streamer_two', url:'http://streamer_2:6002'},
+        {   name:'storage_one',
+            baseUrl:'http://127.0.0.1:5001',
+            healthCheckUrl:'/health',
+            sendCollectedKeysUrl: '/collected-keys/create'
+        },
+        {   name:'streamer_one',
+            baseUrl:'http://streamer_1:6001',
+            healthCheckUrl:'/health',
+            sendCollectedKeysUrl: '/send-collected-keys'
+        },
+        {   name:'streamer_two',
+            baseUrl:'http://streamer_2:6002',
+            healthCheckUrl:'/health',
+            sendCollectedKeysUrl: '/send-collected-keys'
+        }
     ],
 
-    SECONDARY_API_HEALTH_CHECK_URL: '/health',
     SECONDARY_API_SEND_COLLECTED_KEYS_URL: '/add-collected-keys',
     HEALTH_CHECK:{
         //"HEALTHY" = send both realtime messages and BATCH_RETRY work
