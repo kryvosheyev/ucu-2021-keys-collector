@@ -9,6 +9,7 @@ const indexRoute = require('./routes/index');
 const storageRoute = require('./routes/storage');
 const processedFilesRoute = require('./routes/processed-files');
 const collectedKeysRoute = require('./routes/collected-keys');
+const statsRoute = require('./routes/stats');
 
 const bodyDataKeysMiddleware = require('./routes/middlewares/body-data-keys');
 
@@ -30,6 +31,7 @@ app.use('/', indexRoute);
 app.use('/storage', storageRoute);
 app.use('/processed-files', processedFilesRoute);
 app.use('/collected-keys', collectedKeysRoute);
+app.use('/stats', statsRoute);
 
 
 // catch 404 and forward to error handler
