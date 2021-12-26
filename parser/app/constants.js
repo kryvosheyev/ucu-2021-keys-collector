@@ -11,4 +11,5 @@ module.exports.HEALTH_STATUSES = {
 
 module.exports.RESPONSE_MESSAGES = {
     OK: {msg: "OK"},
+    ALREADY_PROCESSED: {msg: "This file has already been processed before"},
 };

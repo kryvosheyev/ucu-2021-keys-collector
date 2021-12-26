@@ -11,7 +11,7 @@ services:
 #      - 3000:3000
       
   parser_1:
-    container_name: secondary_1
+    container_name: parser_1
     build:
       dockerfile: Dockerfile
       context: ./parser
@@ -20,6 +20,15 @@ services:
     ports:
       - 4001
 
+  storage:
+    container_name: storage
+    build:
+      dockerfile: Dockerfile
+      context: ./storage
+    volumes:
+      - "./storage/app:/src/app"
+    ports:
+      - 5001
 
   streamer:
     container_name: streamer

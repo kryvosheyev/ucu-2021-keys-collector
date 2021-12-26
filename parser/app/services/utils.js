@@ -112,6 +112,16 @@ async function reqToNodeSendMsg(node, url, data, timeout) {
 
 async function isFileAlreadyProcessed(fileHash){
     // TODO implement
+    /*
+      lock
+        if(alreadyProcessed) {
+            return true;
+        } else {
+            markAsProcessed(fileHash);
+            return false;
+        }
+      unlock
+     */
     return false;
 }
 

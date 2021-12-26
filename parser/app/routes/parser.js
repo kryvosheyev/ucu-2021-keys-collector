@@ -33,14 +33,17 @@ router.post('/download-and-parse-file', async (req, res, next) => {
             console.log("/master/add-message missing one of the required properties. Returning Error 400");
             return res.status(400).send(responseBody);
         }
-
-        await PROCESS_SERVICE.processMessage(fileHash, fileUrl, project, language, res);
+        const isFileAlreadyProcessed = await UTILS.isFileAlreadyProcessed(fileHash);
+        if(isFileAlreadyProcessed) {
+            UTILS.sendResponse(res, 200, RESPONSE_MESSAGES.ALREADY_PROCESSED)
+        } else {
+            await PROCESS_SERVICE.processMessage(fileHash, fileUrl, project, language, res);
+        }
     }
     catch (err) {
         console.log("/master/add-message: Error - ", err);
         next(err);
     }
-
 });
 
 router.get('/get-all-detected-keys', async (req, res, next) => {

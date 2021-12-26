@@ -11,7 +11,7 @@ const SEND_SERVICE = require('../services/send.service');
 async function processMessage(fileHash, fileUrl, project, language, res) {
     console.log("processMessage...");
     let state = await STATE_SERVICE.getState();
-    let files  = {
+    let file  = {
         fileHash, fileUrl, project, language
     };
 
