@@ -70,6 +70,7 @@ const HTTP_CODE = {
 }
 
 module.exports = {
+  DB_TABLES,
   HTTP_CODE
 }
 

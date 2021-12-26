@@ -2,6 +2,7 @@ const fs = require("fs");
 const config = require('../config');
 const {RESPONSE_MESSAGES} = require('../constants');
 const moment = require('moment-timezone');
+const { v4: uuidv4 } = require("uuid");
 const _ = require("lodash");
 const UTILS = require('../services/utils');
 const STATE_SERVICE = require('../services/state.service');
@@ -25,10 +26,12 @@ async function processMessage(fileHash, fileUrl, project, language, res) {
           >> detectedArr[] of records with detected keys
      */
     let detected = {
+        uuid: uuidv4(),
         detectedAt: UTILS.KievTimeNow(),
-        project: 'github.xxx',
-        fileUrl: 'github.xxxx',
-        language: 'java',
+        fileHash: fileHash,
+        project: project,
+        fileUrl: fileUrl,
+        language: language,
         service: 'aws',
         found: 'JHUGFHFH',
     }

@@ -30,7 +30,7 @@ const config = {
         //"SUSPECTED" = send only realtime messages. Do not send BATCH_RETRY
         //"UNHEALTHY" = do not send realtime messages. Do not send BATCH_RETRY
         // on every health check, status will move left/right
-        HEALTH_SCHEME:["HEALTHY", "HEALTHY", "SUSPECTED", "SUSPECTED", "SUSPECTED"],
+        HEALTH_SCHEME:["HEALTHY", "HEALTHY", "SUSPECTED", "SUSPECTED", "UNHEALTHY"],
         // HEALTH_SCHEME:["HEALTHY", "SUSPECTED", "UNHEALTHY"],
 
         // init with index(0...n-1) of HEALTH_SCHEME

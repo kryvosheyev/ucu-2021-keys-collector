@@ -22,6 +22,8 @@ let nodesStates = {};
 const NODE_IS_IDLE = "NODE_IS_IDLE", NODE_IS_PAUSED = "NODE_IS_PAUSED";
 
 const msgStateMutex = new Mutex();
+
+// TODO check SEND = {}
 SEND = [];
 
 // let example = {

@@ -29,7 +29,6 @@ server.on('listening', onListening);
 
 // close all opened DB connections
 process.on('SIGINT', async () => {
-  await POOL_SERVICE.closeAll();
   console.log("... storage caught STOP signal, shutting down")
   process.exit(0);
 })

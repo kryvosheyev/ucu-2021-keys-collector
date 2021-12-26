@@ -31,7 +31,7 @@ router.post('/upsert-and-respond-if-existed-before', async (req, res, next) => {
 
 router.get('/get-all', async (req, res, next) => {
   try {
-    let found = await PROCESSED_FILES_SERVICE.getAllProcessedFiles({});
+    let found = await PROCESSED_FILES_SERVICE.getAllProcessedFiles({}, {});
     found = found.map(e => {
       return {
         fileHash: e.keys.fileHash,

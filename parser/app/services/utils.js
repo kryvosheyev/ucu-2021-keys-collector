@@ -62,14 +62,14 @@ async function reqToNodeSendMsgWithoutAck(node, baseUrl, sendCollectedKeysUrl, d
     return new Promise(async (resolve, reject) => {
         try {
             // console.log("reqToNodeSendMsgWithoutAck sending data=", data);
-            console.log("reqToNodeSendMsgWithoutAck sending keys=", {keys: _.map(_.concat([], data), 'msg')});
+            console.log("reqToNodeSendMsgWithoutAck sending body=", {keys: _.map(_.concat([], data), 'msg')});
             // console.log("url=", url, " ")
             let response = await axios({
                 method: 'post',
                 url: sendCollectedKeysUrl,
                 baseURL: baseUrl,
                 timeout: timeout,
-                data: {keys: _.concat([], _.map(data, 'msg'))}
+                data: {keys: _.map(_.concat([], data), 'msg')}
             });
             // REQ_ACK, returned { added:[]} with array of ids like [3,4]
             if (response.data && response.data.added && response.data.added.length) {
