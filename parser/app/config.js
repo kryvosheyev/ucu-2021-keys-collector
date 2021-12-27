@@ -83,7 +83,7 @@ const config = {
         // number of messages to send in one batch.
         // It will depend on the network health state
         // MESSAGES_QTY.size must be = INTERVALS.size
-        MESSAGES_QTY: [ 10, 3, 2, 1 ],
+        MESSAGES_QTY: [ 10, 4, 3, 2 ],
 
         // init with index(0...n-1) on INTERVALS[] and MESSAGES_QTY[]
         start_retry_index: 3,
