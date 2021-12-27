@@ -6,12 +6,20 @@ const http = require('http');
  * Module dependencies.
  */
 const app = require('../app');
+var argv = require('optimist').argv;
+const config = require('../config');
+
+console.log("parser will try to send detected keys to these urls: ", config.secondaries);
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '4001');
+// var port = normalizePort(process.env.PORT || '4001');
+// app.set('port', port);
+
+var port = normalizePort(argv.port || '4001');
+console.log("will run on port ", port);
 app.set('port', port);
 
 /**

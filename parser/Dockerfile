@@ -23,4 +23,4 @@ EXPOSE 4001
 
 #CMD ["node",  "app/server.js",  "--port", "4001"]
 
-CMD ["nodemon",  "app/server.js",  "--port", "4001"]
+CMD ["nodemon",  "app/bin/www",  "--port", "4001"]

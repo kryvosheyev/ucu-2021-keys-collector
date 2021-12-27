@@ -5,13 +5,18 @@
  */
 const debug = require('debug')('storage-api:server');
 const http = require('http');
-
 const app = require('../app');
+var argv = require('optimist').argv;
+const config = require('./config');
 
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(process.env.PORT || '5001');
+// var port = normalizePort(process.env.PORT || '5001');
+// app.set('port', port);
+
+var port = normalizePort(argv.port || '5001');
+console.log("will run on port ", port);
 app.set('port', port);
 
 /**
