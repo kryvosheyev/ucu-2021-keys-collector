@@ -19,6 +19,8 @@ services:
       - "./parser/app:/src/app"
     ports:
       - "4001:4001"
+    networks:
+      - mynetwork
 
   storage_1:
     container_name: storage
