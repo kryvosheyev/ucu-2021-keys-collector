@@ -106,7 +106,7 @@ async function healthCheck(nodeName, nodeUrl, healthCheckUrl) {
                 timeout: timeout,
                 data: {}
             });
-            if (response.data && response.data.HEALTH_STATUS === 'OK')     {
+            if (response.data && response.status === 200)     {
                 return {HEALTH_STATUS:'OK'};
             } else {
                 return {HEALTH_STATUS:'BAD'};
