@@ -1,5 +1,5 @@
 var app = require('./app');
-var debug = require('debug')('replicated-log-1:server');
+const debug = require('debug')('ucu-keys-collector-parser:server');
 var http = require('http');
 var argv = require('optimist').argv;
 const config = require('./config');
