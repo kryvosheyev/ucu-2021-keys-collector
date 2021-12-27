@@ -21,6 +21,6 @@ EXPOSE 4001
 #CMD nodemon -L  server.js --port 3000
 #CMD node  server.js --port 3000
 
-CMD ["node",  "app/server.js",  "--port", "4001"]
+#CMD ["node",  "app/server.js",  "--port", "4001"]
 
-#CMD ["nodemon",  "app/server.js",  "--port", "4001"]
+CMD ["nodemon",  "app/server.js",  "--port", "4001"]
