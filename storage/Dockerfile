@@ -16,5 +16,7 @@ RUN npm install
 EXPOSE 5001
 
 #CMD npm start
-#CMD ["node", "app/server.js", "--port", "5001"]
-CMD ["nodemon",  "app/server.js",  "--port", "5001"]
+
+CMD ["node", "app/server.js", "--port", "5001"]
+
+#CMD ["nodemon",  "app/server.js",  "--port", "5001"]
