@@ -19,8 +19,7 @@ services:
       - "./parser/app:/src/app"
     ports:
       - "4001:4001"
-    networks:
-      - mynetwork
+
 
   storage_1:
     container_name: storage_1
@@ -33,8 +32,7 @@ services:
       - "5001:5001"
     depends_on:
       - mongo_storage_1
-    networks:
-      - mynetwork
+
 
   mongo_storage_1:
     container_name: mongo_storage_1
@@ -45,8 +43,7 @@ services:
       - "27017:27017"
     volumes:
       - ./data/db-mongo_storage_1:/data/db
-    networks:
-      - mynetwork
+
 
 
 #  streamer:
@@ -60,5 +57,3 @@ services:
 #      - 6001
 
 
-networks:
-  mynetwork:
