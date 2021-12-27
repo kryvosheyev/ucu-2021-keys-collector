@@ -8,8 +8,8 @@ docker-compose up
 
 # Parser
 to send command to parser API:
-POST http://3.142.70.26:4001/parser/download-and-parse-file
-or locally POST http://parser_1/parser/download-and-parse-file
+POST http://3.142.70.26:4001/parser/download-and-parse-file  
+or locally POST http://parser_1/parser/download-and-parse-file  
 body example: {
   "fileHash": "xxxxx5",
   "fileUrl": "github.xxxxx",
