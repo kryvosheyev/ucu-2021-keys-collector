@@ -23,7 +23,7 @@ services:
       - mynetwork
 
   storage_1:
-    container_name: storage
+    container_name: storage_1
     build:
       dockerfile: Dockerfile
       context: ./storage
@@ -61,5 +61,4 @@ services:
 
 
 networks:
-  mynetwork:
-    driver: bridge
+  mynetwork
