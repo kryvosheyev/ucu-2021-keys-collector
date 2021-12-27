@@ -17,24 +17,26 @@ services:
 #      context: ./parser
 #    volumes:
 #      - "./parser/app:/src/app"
-    ports:
-      - "4001:4001"
-
-#  storage_1:
-#    container_name: storage
-#    build:
-#      dockerfile: Dockerfile
-#      context: ./storage
-#    volumes:
-#      - "./storage/app:/src/app"
 #    ports:
-#      - "5001:5001"
-#    depends_on:
-#      - mongo_storage_1
+#      - "4001:4001"
+
+  storage_1:
+    container_name: storage
+    build:
+      dockerfile: Dockerfile
+      context: ./storage
+    volumes:
+      - "./storage/app:/src/app"
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mongo_storage_1
 
   mongo_storage_1:
     container_name: mongo_storage_1
     image: mongo:latest
+    logging:
+      driver: "none"
     ports:
       - "27017:27017"
     volumes:
