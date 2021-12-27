@@ -46,6 +46,8 @@ secondaries: [
         }
     ]
 ```
+### All secondaries must have GET /health endpoint
+Just return status 200, it will be enough. Response body is ignored.
 
 Parser can send collected keys to any number of databases and streamers.
 
