@@ -8,7 +8,7 @@ const config = {
     // name must be unique
     secondaries: [
         {   name:'storage_one',
-            baseUrl:'http://127.0.0.1:5001',
+            baseUrl:'http://storage_1:5001',
             healthCheckUrl:'/health',
             sendCollectedKeysUrl: '/collected-keys/create'
         },

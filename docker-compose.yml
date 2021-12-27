@@ -10,15 +10,15 @@ services:
 #    ports:
 #      - 3000:3000
       
-#  parser_1:
-#    container_name: parser_1
-#    build:
-#      dockerfile: Dockerfile
-#      context: ./parser
-#    volumes:
-#      - "./parser/app:/src/app"
-#    ports:
-#      - "4001:4001"
+  parser_1:
+    container_name: parser_1
+    build:
+      dockerfile: Dockerfile
+      context: ./parser
+    volumes:
+      - "./parser/app:/src/app"
+    ports:
+      - "4001:4001"
 
   storage_1:
     container_name: storage
@@ -31,6 +31,8 @@ services:
       - "5001:5001"
     depends_on:
       - mongo_storage_1
+    networks:
+      - mynetwork
 
   mongo_storage_1:
     container_name: mongo_storage_1
@@ -41,6 +43,8 @@ services:
       - "27017:27017"
     volumes:
       - ./data/db-mongo_storage_1:/data/db
+    networks:
+      - mynetwork
 
 
 #  streamer:
@@ -52,3 +56,8 @@ services:
 #      - "./streamer/app:/src/app"
 #    ports:
 #      - 6001
+
+
+networks:
+  mynetwork:
+    driver: bridge

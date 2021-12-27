@@ -1,14 +1,14 @@
 const config_env = {
   default: {
-    DATABASE_CONNECTION: 'mongodb://127.0.0.1:27017/keys_collector',
+    DATABASE_CONNECTION: 'mongodb://mongo_storage_1:27017/keys_collector',
     ENV: "TEST"
   },
   development: {
-    DATABASE_CONNECTION: 'mongodb://127.0.0.1:27017/keys_collector',
+    DATABASE_CONNECTION: 'mongodb://mongo_storage_1:27017/keys_collector',
     ENV: "DEV"
   },
   production: {
-    DATABASE_CONNECTION: 'mongodb://127.0.0.1:27017/keys_collector',
+    DATABASE_CONNECTION: 'mongodb://mongo_storage_1:27017/keys_collector',
     ENV: "PROD"
   },
 };
