@@ -26,6 +26,7 @@ Parser can send collected keys to any number of databases and streamers.
 Parser will do at-least-once-delivery, with smart health checks, exponential back-off, gradual recovery, independent batch retry.
 
 Parser will send this message to secondaries:
+```javascript
 {
     "keys": [{
         "uuid": "uuidv4()",
@@ -41,6 +42,7 @@ Parser will send this message to secondaries:
           }
     }]
 }
+```
 
 # Storage
 Inside the "storage" services, exactly-once devivery mode is implemented with idepotency base on the "uuid" property.
