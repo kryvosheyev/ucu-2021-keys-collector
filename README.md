@@ -9,13 +9,16 @@ docker-compose up
 # Parser
 to send command to parser API:
 POST http://3.142.70.26:4001/parser/download-and-parse-file  
+
 or locally POST http://parser_1/parser/download-and-parse-file  
+```javascript
 body example: {
   "fileHash": "xxxxx5",
   "fileUrl": "github.xxxxx",
   "project": "github.xxxx",
   "language": "java"
 }
+```
 
 Parser has its mongoDb.
 Parser will check if "fileHash" was processed before. 
