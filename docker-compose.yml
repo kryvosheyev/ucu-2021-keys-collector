@@ -61,4 +61,4 @@ services:
 
 
 networks:
-  mynetwork
+  mynetwork:
