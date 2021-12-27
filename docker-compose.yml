@@ -18,9 +18,9 @@ services:
     volumes:
       - "./parser/app:/src/app"
     ports:
-      - 4001
+      - "4001:4001"
 
-  storage:
+  storage_1:
     container_name: storage
     build:
       dockerfile: Dockerfile
@@ -28,14 +28,25 @@ services:
     volumes:
       - "./storage/app:/src/app"
     ports:
-      - 5001
+      - "5001:5001"
+    depends_on:
+      - mongo_storage_1
 
-  streamer:
-    container_name: streamer
-    build:
-      dockerfile: Dockerfile
-      context: ./streamer
-    volumes:
-      - "./streamer/app:/src/app"
+  mongo_storage_1:
+    container_name: mongo_storage_1
+    image: mongo:latest
     ports:
-      - 6000
+      - "27017:27017"
+    volumes:
+      - ./data/db-mongo_storage_1:/data/db
+
+
+#  streamer:
+#    container_name: streamer
+#    build:
+#      dockerfile: Dockerfile
+#      context: ./streamer
+#    volumes:
+#      - "./streamer/app:/src/app"
+#    ports:
+#      - 6001

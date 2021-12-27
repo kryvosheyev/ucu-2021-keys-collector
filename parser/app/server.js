@@ -9,7 +9,7 @@ console.log("parser will try to send detected key to the streamer on this url: "
  * Get port from environment and store in Express.
  */
 console.log("--port ", argv.port);
-var port = normalizePort(argv.port || '3000');
+var port = normalizePort(argv.port || '4001');
 app.set('port', port);
 
 /**
