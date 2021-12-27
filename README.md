@@ -91,3 +91,6 @@ or locally GET http://storage_1:5001/stats/get
 
 # Streamer
 
+
+# Interesting reading
+https://medium.com/swlh/aws-access-keys-leak-in-github-repository-and-some-improvements-in-amazon-reaction-cc2e20e89003
