@@ -25,6 +25,9 @@ async function processMessage(fileHash, fileUrl, project, language, res) {
          parse
           >> detectedArr[] of records with detected keys
      */
+
+
+
     let detected = {
         uuid: uuidv4(),
         detectedAt: UTILS.KievTimeNow(),
