@@ -1,6 +1,6 @@
 # ucu-2021-keys-collector
 
-run 
+### run 
 docker-compose up
 
 # Crawler 
@@ -73,7 +73,7 @@ Parser will send this message to secondaries:
 # Storage
 Inside the "storage" services, exactly-once delivery mode is implemented with idempotency based on the "uuid" property.
 
-To see collected keys:
+### To see collected keys:
 
 GET  http://3.142.70.26:5001/collected-keys/get-all
 
@@ -81,7 +81,7 @@ or locally GET http://storage_1:5001/collected-keys/get-all
 
 
 
-To see statistics:
+### To see statistics:
 
 GET  http://3.142.70.26:5001/stats/get
 
