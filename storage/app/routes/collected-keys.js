@@ -32,7 +32,7 @@ router.post('/create', async (req, res, next) => {
       const collValue = { detectedAt, fileHash, project, fileUrl, language, service, found };
       await COLLECTED_KEYS_SERVICE.createCollectedKey(collKeys, collValue);
     }
-    const resp = {"msg": `saved ${keys.length} keys`};
+    const resp = {"added": keys};
     res.send(resp).status(HTTP_CODE.OK);
   } catch (err) {
     console.log(`/collected-keys/create #ERROR: `, err);
