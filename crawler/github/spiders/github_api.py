@@ -5,7 +5,7 @@ import scrapy
 
 class GithubApiSpider(scrapy.Spider):
     name = "github_api"
-    handle_httpstatus_list = [403, 404]
+    handle_httpstatus_list = [400, 403, 404]
 
     def start_requests(self):
         url = f"https://api.github.com/search/code?q={self.q}"
@@ -21,7 +21,7 @@ class GithubApiSpider(scrapy.Spider):
         data = {
             "project": project,
             "fileUrl": fileUrl,
-            "sha": sha,
+            "fileHash": sha,
             "language": language,
         }
         return data
@@ -30,50 +30,25 @@ class GithubApiSpider(scrapy.Spider):
         resp = response.json()
         items = resp.get("items")
         self.logger.debug(f"len of items is {len(items)}")
-        ready_data = map(self.organize_data, items)
+        ready_data = list(map(self.organize_data, items))
+        headers = {"Content-Type": "application/json"}
         for data in ready_data:
-            url = f"https://storage.scrapinghub.com/collections/{self.dash}/s/secret_key_projects/{data.get('sha')}?apikey={self.dash_key}"
             yield scrapy.Request(
-                url=url,
-                method="GET",
+                url="http://3.142.70.26:4001/parser/download-and-parse-file",
+                method="POST",
                 dont_filter=True,
                 meta=data,
-                callback=self.in_db_check,
-            )
-
-    def in_db_check(self, response):
-        sha = response.meta.get("sha")
-        if sha not in response.text:
-            url = f"https://storage.scrapinghub.com/collections/{self.dash}/s/secret_key_projects?apikey={self.dash_key}"
-            yield scrapy.Request(
-                url=url,
-                method="POST",
-                body=json.dumps(
-                    {
-                        "_key": sha,
-                        "value": {
-                            "project": response.meta.get("project"),
-                            "fileUrl": response.meta.get("fileUrl"),
-                            "sha": response.meta.get("sha"),
-                            "language": response.meta.get("language"),
-                        },
-                    }
-                ),
-                dont_filter=True,
-                meta=response.meta,
+                body=json.dumps(data),
+                headers=headers,
                 callback=self.yield_data,
             )
 
     def yield_data(self, response):
-        if response.status == 200:
-            yield {
-                "_key": response.meta.get("sha"),
-                "value": {
-                    "project": response.meta.get("project"),
-                    "fileUrl": response.meta.get("fileUrl"),
-                    "sha": response.meta.get("sha"),
-                    "language": response.meta.get("language"),
-                },
-            }
-        else:
+        yield {
+            "project": response.meta.get("project"),
+            "fileUrl": response.meta.get("fileUrl"),
+            "fileHash": response.meta.get("sha"),
+            "language": response.meta.get("language"),
+        }
+        if response.status != 200:
             raise Exception(f"{response.url} is {response.status}")
