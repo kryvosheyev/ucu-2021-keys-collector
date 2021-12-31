@@ -43,15 +43,11 @@ class GithubApiSpider(scrapy.Spider):
             )
 
     def yield_data(self, response):
-        if response.status == 200:
-            yield {
-                "_key": response.meta.get("sha"),
-                "value": {
-                    "project": response.meta.get("project"),
-                    "fileUrl": response.meta.get("fileUrl"),
-                    "sha": response.meta.get("sha"),
-                    "language": response.meta.get("language"),
-                },
-            }
-        else:
+        yield {
+            "project": response.meta.get("project"),
+            "fileUrl": response.meta.get("fileUrl"),
+            "fileHash": response.meta.get("sha"),
+            "language": response.meta.get("language"),
+        }
+        if response.status != 200:
             raise Exception(f"{response.url} is {response.status}")
