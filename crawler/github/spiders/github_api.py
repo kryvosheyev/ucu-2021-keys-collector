@@ -30,15 +30,16 @@ class GithubApiSpider(scrapy.Spider):
         resp = response.json()
         items = resp.get("items")
         self.logger.debug(f"len of items is {len(items)}")
-        ready_data = map(self.organize_data, items)
+        ready_data = list(map(self.organize_data, items))
+        headers = {"Content-Type": "application/json"}
         for data in ready_data:
-            url = "http://3.142.70.26:4001/parser/download-and-parse-file"
             yield scrapy.Request(
-                url=url,
+                url="http://3.142.70.26:4001/parser/download-and-parse-file",
                 method="POST",
                 dont_filter=True,
                 meta=data,
                 body=json.dumps(data),
+                headers=headers,
                 callback=self.yield_data,
             )
 
