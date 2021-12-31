@@ -5,7 +5,7 @@ import scrapy
 
 class GithubApiSpider(scrapy.Spider):
     name = "github_api"
-    handle_httpstatus_list = [403, 404]
+    handle_httpstatus_list = [400, 403, 404]
 
     def start_requests(self):
         url = f"https://api.github.com/search/code?q={self.q}"
@@ -21,7 +21,7 @@ class GithubApiSpider(scrapy.Spider):
         data = {
             "project": project,
             "fileUrl": fileUrl,
-            "sha": sha,
+            "fileHash": sha,
             "language": language,
         }
         return data
@@ -32,35 +32,13 @@ class GithubApiSpider(scrapy.Spider):
         self.logger.debug(f"len of items is {len(items)}")
         ready_data = map(self.organize_data, items)
         for data in ready_data:
-            url = f"https://storage.scrapinghub.com/collections/{self.dash}/s/secret_key_projects/{data.get('sha')}?apikey={self.dash_key}"
-            yield scrapy.Request(
-                url=url,
-                method="GET",
-                dont_filter=True,
-                meta=data,
-                callback=self.in_db_check,
-            )
-
-    def in_db_check(self, response):
-        sha = response.meta.get("sha")
-        if sha not in response.text:
-            url = f"https://storage.scrapinghub.com/collections/{self.dash}/s/secret_key_projects?apikey={self.dash_key}"
+            url = "http://3.142.70.26:4001/parser/download-and-parse-file"
             yield scrapy.Request(
                 url=url,
                 method="POST",
-                body=json.dumps(
-                    {
-                        "_key": sha,
-                        "value": {
-                            "project": response.meta.get("project"),
-                            "fileUrl": response.meta.get("fileUrl"),
-                            "sha": response.meta.get("sha"),
-                            "language": response.meta.get("language"),
-                        },
-                    }
-                ),
                 dont_filter=True,
-                meta=response.meta,
+                meta=data,
+                body=json.dumps(data),
                 callback=self.yield_data,
             )
 
