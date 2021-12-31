@@ -30,7 +30,7 @@ class GithubApiSpider(scrapy.Spider):
         resp = response.json()
         items = resp.get("items")
         self.logger.debug(f"len of items is {len(items)}")
-        ready_data = list(map(self.organize_data, items))
+        ready_data = map(self.organize_data, items)
         headers = {"Content-Type": "application/json"}
         for data in ready_data:
             yield scrapy.Request(
