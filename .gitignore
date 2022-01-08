@@ -104,3 +104,9 @@ dist
 .tern-port
 
 data/
+
+.idea/
+crawler/.idea/
+parser/.idea/
+storage/.idea/
+streamer/.idea/
