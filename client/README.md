@@ -2,4 +2,4 @@
 
 ### Client
 
-Run in browser console
+Copy-paste the code of client.js into browser console
