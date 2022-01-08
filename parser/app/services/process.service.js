@@ -35,8 +35,8 @@ async function processMessage(fileHash, fileUrl, project, language, res) {
         project: project,
         fileUrl: fileUrl,
         language: language,
-        service: 'aws',
-        found: 'JHUGFHFH',
+        service: 'hardcoded:_aws',
+        found: 'hardcoded:_JHUGFHFH',
     }
 
     let rLogMsg = await STORAGE_SERVICE.saveMsgAndGetRLogMsg(detected);

@@ -33,6 +33,16 @@ services:
     depends_on:
       - mongo_storage_1
 
+  streamer_1:
+    container_name: streamer_1
+    build:
+      dockerfile: Dockerfile
+      context: ./streamer
+    volumes:
+      - "./storage/app:/src/app"
+    ports:
+      - "7001:7001"
+      - "9001:9001"
 
   mongo_storage_1:
     container_name: mongo_storage_1
@@ -45,15 +55,5 @@ services:
       - ./data/db-mongo_storage_1:/data/db
 
 
-
-#  streamer:
-#    container_name: streamer
-#    build:
-#      dockerfile: Dockerfile
-#      context: ./streamer
-#    volumes:
-#      - "./streamer/app:/src/app"
-#    ports:
-#      - 6001
 
 
