@@ -1,5 +1,9 @@
+"""The script scrapes the required data from the required projects 
+and sends this data to http://3.142.70.26:4001/parser/download-and-parse-file"""
+
 import json
 import os
+
 import requests
 import rx
 from rx import operators as ops
@@ -44,4 +48,4 @@ def main(key, q):
 
 
 if __name__ == "__main__":
-    main(os.getenv('GITHUB_KEY'), "awsaccess")
+    main(os.getenv("GITHUB_KEY"), "awsaccess")
