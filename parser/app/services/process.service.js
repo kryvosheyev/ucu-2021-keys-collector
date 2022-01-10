@@ -4,6 +4,8 @@ const {RESPONSE_MESSAGES} = require('../constants');
 const moment = require('moment-timezone');
 const { v4: uuidv4 } = require("uuid");
 const _ = require("lodash");
+const { delay, map, tap } = require('rxjs/operators');
+
 const UTILS = require('../services/utils');
 const STATE_SERVICE = require('../services/state.service');
 const STORAGE_SERVICE = require('../services/master-storage.service');
@@ -27,7 +29,6 @@ async function processMessage(fileHash, fileUrl, project, language, res) {
      */
 
 
-
     let detected = {
         uuid: uuidv4(),
         detectedAt: UTILS.KievTimeNow(),
@@ -43,6 +44,18 @@ async function processMessage(fileHash, fileUrl, project, language, res) {
     // console.log("saveMsgAndGetRLogMsg.rLogMsg=",rLogMsg);
     await SEND_SERVICE.sendMsgToNodes(rLogMsg, 1 + config.secondaries.length, 1, 1, res);
 }
+
+async function saveState(state) {
+    await fsPromises.writeFile(config.CURRENT_STATE_PATH, state, 'utf8');
+    return 1;
+};
+
+async function readState() {
+    const r = await fsPromises.readFile(config.CURRENT_STATE_PATH, 'utf8');
+    return r;
+};
+
+
 
 module.exports = {
     processMessage

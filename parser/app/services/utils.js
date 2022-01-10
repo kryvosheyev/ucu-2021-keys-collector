@@ -1,7 +1,7 @@
 const axios = require('axios');
 const _ = require("lodash");
 const moment = require('moment-timezone');
-const {SECONDARY_API_SEND_COLLECTED_KEYS_URL} = require('../config');
+const {PROCESSED_FILES_CHECK_URL} = require('../config');
 
 async function sleep(ms) {
     return new Promise(resolve =>
@@ -110,19 +110,34 @@ async function reqToNodeSendMsg(node, baseUrl, sendCollectedKeysUrl, data, timeo
     })
 }
 
-async function isFileAlreadyProcessed(fileHash){
-    // TODO implement
-    /*
-      lock
-        if(alreadyProcessed) {
-            return true;
-        } else {
-            markAsProcessed(fileHash);
-            return false;
+async function isFileAlreadyProcessed(fileHash, filename){
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response = await axios({
+                method: 'post',
+                url: '',
+                baseURL: PROCESSED_FILES_CHECK_URL,
+                timeout: 3000,
+                data: {
+                    "data": {
+                        "keys": {
+                            "fileHash": fileHash
+                        },
+                        "value": {
+                            "filename": filename
+                        }
+                    }
+                }
+            });
+            if (response.data && response.data && response.data.existed === true) {
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        } catch (err) {
+            resolve(false)
         }
-      unlock
-     */
-    return false;
+    })
 }
 
 async function getFileAsStr(fileUrl){

@@ -3,7 +3,7 @@ const config = {
 
     DOWNLOAD_DIR: "./downloaded",
 
-    PROCESSED_FILES_CHECK_URL: "http://storage_1:5001/",
+    PROCESSED_FILES_CHECK_URL: "http://storage_1:5001/storage/record/upsert-and-respond-if-existed-before",
 
     // name must be unique
     secondaries: [
@@ -13,18 +13,17 @@ const config = {
             sendCollectedKeysUrl: '/collected-keys/create'
         },
         {   name:'streamer_one',
-            baseUrl:'http://streamer_1:6001',
+            baseUrl:'http://streamer_1:7001',
             healthCheckUrl:'/health',
             sendCollectedKeysUrl: '/send-collected-keys'
         },
         {   name:'streamer_two',
-            baseUrl:'http://streamer_2:6002',
+            baseUrl:'http://streamer_2:7002',
             healthCheckUrl:'/health',
             sendCollectedKeysUrl: '/send-collected-keys'
         }
     ],
-
-    SECONDARY_API_SEND_COLLECTED_KEYS_URL: '/add-collected-keys',
+    
     HEALTH_CHECK:{
         //"HEALTHY" = send both realtime messages and BATCH_RETRY work
         //"SUSPECTED" = send only realtime messages. Do not send BATCH_RETRY
