@@ -1,4 +1,4 @@
-"""The script scrapes the required data from the required projects 
+"""The script scrapes the required data from the required projects
 and sends this data to http://3.142.70.26:4001/parser/download-and-parse-file"""
 
 import json
