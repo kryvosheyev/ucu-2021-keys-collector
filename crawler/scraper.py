@@ -31,6 +31,9 @@ def http_send_data(item):
 
 
 def main(key, q):
+    if not key or not q:
+        raise Exception("set environment variables")
+
     url = f"https://api.github.com/search/code?q={q}"
     headers = {"Authorization": f"Token {key}"}
     resp = requests.get(url, headers=headers)
@@ -48,4 +51,4 @@ def main(key, q):
 
 
 if __name__ == "__main__":
-    main(os.getenv("GITHUB_KEY"), "awsaccess")
+    main(os.getenv("GITHUB_KEY"), os.getenv("Q_STRING"))
