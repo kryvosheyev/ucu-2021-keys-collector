@@ -6,6 +6,7 @@ const HEALTH_CHECK_SERVICE = require('./services/health-check.service');
 const BATCH_RETRY_PARAMS_SERVICE = require('./services/batch-retry-params.service');
 const BATCH_RETRY_SERVICE = require('./services/batch-retry.service');
 const SEND_SERVICE = require('./services/send.service');
+const HTTP_QUEUE = require('./services/http-queue');
 
 SEND_SERVICE.initNodeMutexes().then(
     console.log("initNodeMutexes done")
@@ -19,7 +20,17 @@ BATCH_RETRY_PARAMS_SERVICE.initBackOffRecovery().then(
 BATCH_RETRY_SERVICE.startRetryMonitors().then(
     console.log("startRetryMonitors done")
 );
+HTTP_QUEUE.initQueue().subscribe((x) => console.log(x));
 
+const fileObj = {
+  "fileHash": "03e400834c0dde37b9262539f5944a4034bb78b6",
+  "project": "https://github.com/babylonhealth/terraform-provider-aws-babylon",
+  "fileUrl": "https://github.com/babylonhealth/terraform-provider-aws-babylon/blob/3376dfe46ff66886d83a5ba7d234c35bc2967eed/aws/resource_aws_iam_access_key_test.go",
+  "language": "go"
+};
+HTTP_QUEUE.addToQueue(fileObj);
+
+console.log("initQueue done");
 
 var indexRouter = require('./routes/index');
 var parserRouter = require('./routes/parser');

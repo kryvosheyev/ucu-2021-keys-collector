@@ -5,14 +5,12 @@ const moment = require('moment');
 var router = express.Router();
 const asyncModule = require("async");
 const config = require('../config');
+const {RESPONSE_MESSAGES} = require('../constants');
 const UTILS = require('../services/utils');
 const STATE_SERVICE = require('../services/state.service');
 const STORAGE_SERVICE = require('../services/master-storage.service');
 const PROCESS_SERVICE = require('../services/process.service');
 const {RETRY} = require('../config');
-
-
-
 
 router.post('/download-and-parse-file', async (req, res, next) => {
     let body_example = {
@@ -23,7 +21,7 @@ router.post('/download-and-parse-file', async (req, res, next) => {
     };
 
     let body = req.body;
-    console.log("/parser/download-and-parse-file received body=", body);
+    // console.log("/parser/download-and-parse-file received body=", body);
 
     let { fileHash, fileUrl, project, language } = body;
 
@@ -34,11 +32,13 @@ router.post('/download-and-parse-file', async (req, res, next) => {
             return res.status(400).send(responseBody);
         }
         const isFileAlreadyProcessed = await UTILS.isFileAlreadyProcessed(fileHash);
-        if(isFileAlreadyProcessed) {
+        if(!1 && isFileAlreadyProcessed) {
             UTILS.sendResponse(res, 200, RESPONSE_MESSAGES.ALREADY_PROCESSED)
         } else {
-            await PROCESS_SERVICE.processMessage(fileHash, fileUrl, project, language, res);
+            UTILS.sendResponse(res, 200, RESPONSE_MESSAGES.OK);
+            await PROCESS_SERVICE.processFile(fileHash, fileUrl, project, language, res);
         }
+        return res.status(200).send({msg: 'OK'});
     }
     catch (err) {
         console.log("/parser/download-and-parse-file: Error - ", err);

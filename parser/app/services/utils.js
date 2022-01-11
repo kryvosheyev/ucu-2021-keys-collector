@@ -33,8 +33,8 @@ function isEmpty(obj){
 
 function sendResponse(res, status, body){
     if(!res.headersSent) {
-        console.log("sending response to client=", body);
-        res.status(status).send(body);
+        // console.log("sending response to client=", body);
+        // res.status(status).send(body);
     } else {
         //console.log("headersSent already for status=", status, " body=", body);
     }
@@ -56,6 +56,25 @@ async function  sendPostHTTP(baseUrl, url, body) {
             reject(err);
         }
     })
+};
+
+function  sendGetHTTP(url) {
+    return axios({
+        method: 'get',
+        url: url,
+    })
+};
+
+function  sendGetHTTPAsStream(url) {
+    try{
+        return axios({
+            method: 'get',
+            url: url,
+            responseType: 'stream'
+        })
+    } catch (err) {
+        return '';
+    }
 };
 
 async function reqToNodeSendMsgWithoutAck(node, baseUrl, sendCollectedKeysUrl, data, timeout) {
@@ -163,6 +182,8 @@ module.exports = {
     sleepWhileUpdateInProgress,
     isEmpty,
     sendPostHTTP,
+    sendGetHTTP,
+    sendGetHTTPAsStream,
     reqToNodeSendMsg,
     reqToNodeSendMsgWithoutAck,
     sendResponse,
