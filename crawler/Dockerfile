@@ -9,6 +9,7 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-ENV GITHUB_KEY your_key
+# ENV GITHUB_KEY your_key
+# ENV Q_STRING awsaccess
 
 CMD [ "python3", "scraper.py"]

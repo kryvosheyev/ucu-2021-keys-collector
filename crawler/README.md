@@ -6,4 +6,4 @@
 `docker build --tag github-docker .`
 
 ### Run your image as a container
-`docker run github-docker`
+`docker run --env "GITHUB_KEY"="your github key" --env "Q_STRING"="the string you are looking for" github-docker`
