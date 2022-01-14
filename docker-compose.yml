@@ -39,7 +39,7 @@ services:
       dockerfile: Dockerfile
       context: ./streamer
     volumes:
-      - "./storage/app:/src/app"
+      - "./streamer/app:/src/app"
     ports:
       - "7001:7001"
       - "9001:9001"
