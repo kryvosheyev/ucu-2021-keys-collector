@@ -61,6 +61,7 @@ async function retryMonitor(node) {
             await BATCH_RETRY_PARAMS_SERVICE.setRetryState(nodeName, 'OK');
             await deleteMessagesFromBatchRetry(nodeName, response.added);
         } else {
+            console.log('response=',response);
             console.log(`BATCH RETRY failed to deliver ${messageIds.length} msg with ids[${messageIds}] to node=${node.name}`);
             await BATCH_RETRY_PARAMS_SERVICE.setRetryState(nodeName, 'BAD');
         }

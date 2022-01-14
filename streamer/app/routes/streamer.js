@@ -42,11 +42,11 @@ router.post('/send-collected-keys', async (req, res, next) => {
   try {
     // console.log("/streamer/send-collected-keys body=", req.body);
     let { keys } = req.body;
+    const resp = {"added ": keys};
+    res.send(resp).status(HTTP_CODE.OK);
 
     STREAMER_SERVICE.processData(keys);
 
-    const resp = {"added ": keys};
-    res.send(resp).status(HTTP_CODE.OK);
   } catch (err) {
     console.log(`/streamer/send-collected-keys #ERROR: `, err);
     next(err);
