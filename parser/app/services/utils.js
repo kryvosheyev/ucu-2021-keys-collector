@@ -80,7 +80,7 @@ function  sendGetHTTPAsStream(url) {
 async function reqToNodeSendMsgWithoutAck(node, baseUrl, sendCollectedKeysUrl, data, timeout) {
     return new Promise(async (resolve, reject) => {
         try {
-            // console.log("reqToNodeSendMsgWithoutAck sending data=", data);
+            console.log("reqToNodeSendMsgWithoutAck sending data=", data);
             console.log("reqToNodeSendMsgWithoutAck sending body=", {keys: _.map(_.concat([], data), 'msg')});
             // console.log("url=", url, " ")
             let response = await axios({
