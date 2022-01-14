@@ -19,7 +19,7 @@ let init = {
     "fileUrl": "https://github.com/babylonhealth/terraform-provider-aws-babylon/blob/3376dfe46ff66886d83a5ba7d234c35bc2967eed/aws/resource_aws_iam_access_key_test.go",
     "language": "go"
 };
-const QUEUE = new BehaviorSubject({});
+const QUEUE = new BehaviorSubject();
 
 
 function addToQueue(fileObj) {
