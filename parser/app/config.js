@@ -15,12 +15,12 @@ const config = {
         {   name:'streamer_one',
             baseUrl:'http://streamer_1:7001',
             healthCheckUrl:'/health',
-            sendCollectedKeysUrl: '/send-collected-keys'
+            sendCollectedKeysUrl: '/streamer/send-collected-keys'
         },
         {   name:'streamer_two',
             baseUrl:'http://streamer_2:7002',
             healthCheckUrl:'/health',
-            sendCollectedKeysUrl: '/send-collected-keys'
+            sendCollectedKeysUrl: '/streamer/send-collected-keys'
         }
     ],
     
